@@ -239,72 +239,80 @@ const DataPegawai = () => {
                     </div>
                 </div>
 
-                <div className="max-w-full overflow-x-auto py-4">
-                    <table className="w-full table-auto">
+                {/* Mobile swipe hint */}
+                <div className="md:hidden mb-3 px-2">
+                    <p className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
+                        <span>👆</span>
+                        <span>Swipe horizontally to view more columns</span>
+                    </p>
+                </div>
+
+                <div className="overflow-x-auto py-4 -mx-5 sm:-mx-7.5 px-5 sm:px-7.5">
+                    <table className="w-full min-w-[800px] md:min-w-full table-auto">
                         <thead>
                             <tr className="bg-gray-2 text-left dark:bg-meta-4">
-                                <th className="py-4 px-4 font-medium text-black dark:text-white xl:pl-11">No</th>
-                                <th className="py-4 px-4 font-medium text-black dark:text-white xl:pl-11">Photo</th>
-                                <th className="py-4 px-4 font-medium text-black dark:text-white xl:pl-11">NIK</th>
-                                <th className="py-4 px-4 font-medium text-black dark:text-white">Nama Pegawai</th>
-                                <th className="py-4 px-4 font-medium text-black dark:text-white">Jenis Kelamin</th>
-                                <th className="py-4 px-4 font-medium text-black dark:text-white">Jabatan</th>
-                                <th className="py-4 px-4 font-medium text-black dark:text-white">Designation</th>
-                                <th className="py-4 px-4 font-medium text-black dark:text-white">Tanggal Masuk</th>
-                                <th className="py-4 px-4 font-medium text-black dark:text-white">Status</th>
-                                <th className="py-4 px-4 font-medium text-black dark:text-white">Hak Akses</th>
-                                <th className="py-4 px-4 font-medium text-black dark:text-white">Aksi</th>
+                                <th className="py-3 px-2 md:py-4 md:px-4 font-medium text-black dark:text-white text-xs md:text-base whitespace-nowrap xl:pl-11">No</th>
+                                <th className="py-3 px-2 md:py-4 md:px-4 font-medium text-black dark:text-white text-xs md:text-base whitespace-nowrap xl:pl-11">Photo</th>
+                                <th className="py-3 px-2 md:py-4 md:px-4 font-medium text-black dark:text-white text-xs md:text-base whitespace-nowrap xl:pl-11">NIK</th>
+                                <th className="py-3 px-2 md:py-4 md:px-4 font-medium text-black dark:text-white text-xs md:text-base whitespace-nowrap">Nama Pegawai</th>
+                                <th className="py-3 px-2 md:py-4 md:px-4 font-medium text-black dark:text-white text-xs md:text-base whitespace-nowrap hidden sm:table-cell">Jenis Kelamin</th>
+                                <th className="py-3 px-2 md:py-4 md:px-4 font-medium text-black dark:text-white text-xs md:text-base whitespace-nowrap">Jabatan</th>
+                                <th className="py-3 px-2 md:py-4 md:px-4 font-medium text-black dark:text-white text-xs md:text-base whitespace-nowrap hidden md:table-cell">Designation</th>
+                                <th className="py-3 px-2 md:py-4 md:px-4 font-medium text-black dark:text-white text-xs md:text-base whitespace-nowrap hidden lg:table-cell">Tanggal Masuk</th>
+                                <th className="py-3 px-2 md:py-4 md:px-4 font-medium text-black dark:text-white text-xs md:text-base whitespace-nowrap hidden sm:table-cell">Status</th>
+                                <th className="py-3 px-2 md:py-4 md:px-4 font-medium text-black dark:text-white text-xs md:text-base whitespace-nowrap hidden lg:table-cell">Hak Akses</th>
+                                <th className="py-3 px-2 md:py-4 md:px-4 font-medium text-black dark:text-white text-xs md:text-base whitespace-nowrap">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             {filteredDataPegawai.slice(startIndex, endIndex).map((data, index) => {
                                 return (
                                     <tr key={data.id}>
-                                        <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                                            <p className="text-black dark:text-white text-center">{startIndex + index + 1}</p>
+                                        <td className="border-b border-[#eee] py-3 px-2 md:py-5 md:px-4 dark:border-strokedark">
+                                            <p className="text-black dark:text-white text-center text-xs md:text-base">{startIndex + index + 1}</p>
                                         </td>
-                                        <td className="border-b border-[#eee] py-5 px-4 pl-9 dark:border-strokedark">
-                                            <div className="h-12.5 w-15">
+                                        <td className="border-b border-[#eee] py-3 px-2 md:py-5 md:px-4 pl-6 md:pl-9 dark:border-strokedark">
+                                            <div className="h-10 w-10 md:h-12.5 md:w-15">
                                                 <div className="rounded-full overflow-hidden">
-                                                    <img src={`http://localhost:5000/images/${data.photo}`} alt="Photo Profil" />
+                                                    <img src={`http://localhost:5000/images/${data.photo}`} alt="Photo Profil" className="w-full h-full object-cover" />
                                                 </div>
                                             </div>
                                         </td>
-                                        <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                                            <p className="text-black dark:text-white text-center">{data.nik}</p>
+                                        <td className="border-b border-[#eee] py-3 px-2 md:py-5 md:px-4 dark:border-strokedark">
+                                            <p className="text-black dark:text-white text-center text-xs md:text-base">{data.nik}</p>
                                         </td>
-                                        <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                                            <p className="text-black dark:text-white">{data.nama_pegawai}</p>
+                                        <td className="border-b border-[#eee] py-3 px-2 md:py-5 md:px-4 dark:border-strokedark">
+                                            <p className="text-black dark:text-white text-xs md:text-base truncate max-w-[120px] md:max-w-none" title={data.nama_pegawai}>{data.nama_pegawai}</p>
                                         </td>
-                                        <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                                            <p className="text-black dark:text-white">{data.jenis_kelamin}</p>
+                                        <td className="border-b border-[#eee] py-3 px-2 md:py-5 md:px-4 dark:border-strokedark hidden sm:table-cell">
+                                            <p className="text-black dark:text-white text-xs md:text-base">{data.jenis_kelamin}</p>
                                         </td>
-                                        <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                                            <p className="text-black dark:text-white">{data.jabatan}</p>
+                                        <td className="border-b border-[#eee] py-3 px-2 md:py-5 md:px-4 dark:border-strokedark">
+                                            <p className="text-black dark:text-white text-xs md:text-base truncate max-w-[100px] md:max-w-none" title={data.jabatan}>{data.jabatan}</p>
                                         </td>
-                                        <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                                            <p className="text-black dark:text-white">{data.designation || '-'}</p>
+                                        <td className="border-b border-[#eee] py-3 px-2 md:py-5 md:px-4 dark:border-strokedark hidden md:table-cell">
+                                            <p className="text-black dark:text-white text-xs md:text-base truncate max-w-[100px] md:max-w-none" title={data.designation || '-'}>{data.designation || '-'}</p>
                                         </td>
-                                        <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                                            <p className="text-black dark:text-white">{data.tanggal_masuk}</p>
+                                        <td className="border-b border-[#eee] py-3 px-2 md:py-5 md:px-4 dark:border-strokedark hidden lg:table-cell">
+                                            <p className="text-black dark:text-white text-xs md:text-base">{data.tanggal_masuk}</p>
                                         </td>
-                                        <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                                            <p className="text-black dark:text-white">{data.status}</p>
+                                        <td className="border-b border-[#eee] py-3 px-2 md:py-5 md:px-4 dark:border-strokedark hidden sm:table-cell">
+                                            <p className="text-black dark:text-white text-xs md:text-base">{data.status}</p>
                                         </td>
-                                        <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                                            <p className="text-black dark:text-white">{data.hak_akses}</p>
+                                        <td className="border-b border-[#eee] py-3 px-2 md:py-5 md:px-4 dark:border-strokedark hidden lg:table-cell">
+                                            <p className="text-black dark:text-white text-xs md:text-base">{data.hak_akses}</p>
                                         </td>
-                                        <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
-                                            <div className="flex items-center space-x-3.5">
+                                        <td className="border-b border-[#eee] py-3 px-2 md:py-5 md:px-4 dark:border-strokedark">
+                                            <div className="flex items-center space-x-2 md:space-x-3.5">
                                                 <Link
                                                     to={`/data-pegawai/form-data-pegawai/edit/${data.id}`}
-                                                    className="hover:text-black">
-                                                    <FaRegEdit className="text-primary text-xl hover:text-black dark:hover:text-white" />
+                                                    className="hover:text-black p-2 min-w-[40px] min-h-[40px] flex items-center justify-center rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                                                    <FaRegEdit className="text-primary text-lg md:text-xl hover:text-black dark:hover:text-white" />
                                                 </Link>
                                                 <button
                                                     onClick={() => onDeletePegawai(data.id)}
-                                                    className="hover:text-black">
-                                                    <BsTrash3 className="text-danger text-xl hover:text-black dark:hover:text-white" />
+                                                    className="hover:text-black p-2 min-w-[40px] min-h-[40px] flex items-center justify-center rounded hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
+                                                    <BsTrash3 className="text-danger text-lg md:text-xl hover:text-black dark:hover:text-white" />
                                                 </button>
                                             </div>
                                         </td>
