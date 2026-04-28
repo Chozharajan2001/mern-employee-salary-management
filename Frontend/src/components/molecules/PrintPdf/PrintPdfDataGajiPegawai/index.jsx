@@ -9,6 +9,7 @@ import {
     viewGajiSinglePegawaiByName,
 } from "../../../../config/redux/action";
 import { ButtonOne, ButtonTwo } from "../../../atoms";
+import { formatDateDDMMYYYY } from "../../../../utils/dateFormatter";
 
 const PrintPdfDataGajiPegawai = () => {
     const componentRef = useRef();
@@ -214,7 +215,7 @@ const PrintPdfDataGajiPegawai = () => {
                                     <span>{nama_pegawai}</span>
                                 </div>
                                 <div className="font-medium text-black dark:text-white">
-                                    <span className="text-right">Karawang, {`${new Date().getDate()} ${bulan} ${tahun}`}</span>
+                                    <span className="text-right">Karawang, {formatDateDDMMYYYY(new Date())}</span>
                                     <br />
                                     <span>Finance</span>
                                     <br />
@@ -223,7 +224,7 @@ const PrintPdfDataGajiPegawai = () => {
                                 </div>
                             </div>
                             <div className="italic text-black dark:text-white mt-30">
-                                Dicetak Pada : {`${new Date().getDate()} ${bulan} ${tahun}`}
+                                Dicetak Pada : {formatDateDDMMYYYY(new Date())}
                             </div>
                         </div>
                     );

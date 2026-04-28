@@ -11,6 +11,7 @@ import {
     getMe
 } from "../../../../config/redux/action";
 import { ButtonOne, ButtonTwo } from "../../../atoms";
+import { formatDateDDMMYYYY } from "../../../../utils/dateFormatter";
 
 const PrintPdfSlipGaji = () => {
     const componentRef = useRef();
@@ -231,7 +232,7 @@ const PrintPdfSlipGaji = () => {
                                     <span>{name}</span>
                                 </div>
                                 <div className="font-medium text-black dark:text-white">
-                                    <span className="text-right">Karawang, {`${new Date().getDate()} ${bulan} ${tahun}`}</span>
+                                    <span className="text-right">Karawang, {formatDateDDMMYYYY(new Date())}</span>
                                     <br />
                                     <span>Finance</span>
                                     <br />
@@ -240,7 +241,7 @@ const PrintPdfSlipGaji = () => {
                                 </div>
                             </div>
                             <div className="italic text-black dark:text-white mt-30">
-                                Dicetak Pada : {`${new Date().getDate()} ${bulan} ${tahun}`}
+                                Dicetak Pada : {formatDateDDMMYYYY(new Date())}
                             </div>
                         </div>
                     );

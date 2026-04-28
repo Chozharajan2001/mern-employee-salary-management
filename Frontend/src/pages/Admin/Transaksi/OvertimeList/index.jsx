@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { getMe } from '../../../../config/redux/action';
 import { FaCheck } from 'react-icons/fa';
+import { formatDateDDMMYYYY } from '../../../../utils/dateFormatter';
 
 const OvertimeList = () => {
     const [overtimeEntries, setOvertimeEntries] = useState([]);
@@ -96,14 +97,6 @@ const OvertimeList = () => {
         return badges[status] || 'bg-gray-100 text-gray-800';
     };
 
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const year = date.getFullYear();
-        return `${day}/${month}/${year}`;
-    };
-
     return (
         <Layout>
             <Breadcrumb pageName='Overtime Approval' />
@@ -173,7 +166,7 @@ const OvertimeList = () => {
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap">
                                                 <div className="text-sm text-gray-900">
-                                                    {formatDate(entry.overtime_date)}
+                                                    {formatDateDDMMYYYY(entry.overtime_date)}
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap">

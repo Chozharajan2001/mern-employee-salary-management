@@ -10,6 +10,7 @@ import {
   getMe,
 } from "../../../../config/redux/action";
 import { ButtonOne, ButtonTwo } from "../../../atoms";
+import { formatDateDDMMYYYY } from "../../../../utils/dateFormatter";
 
 const PrintPdfLaporanGaji = () => {
   const componentRef = useRef();
@@ -190,7 +191,7 @@ const PrintPdfLaporanGaji = () => {
         </div>
         <div className="py-6">
           <div className="font-medium text-black text-right dark:text-white">
-            <span>Karawang, {`${new Date().getDate()} ${bulan} ${tahun}`}</span>
+            <span>Karawang, {formatDateDDMMYYYY(new Date())}</span>
             <br />
             <span className="p-26">Finance</span>
             <br />
@@ -199,7 +200,7 @@ const PrintPdfLaporanGaji = () => {
           </div>
         </div>
         <div className="italic text-black dark:text-white mt-40">
-          Dicetak Pada : {`${new Date().getDate()} ${bulan} ${tahun}`}
+          Dicetak Pada : {formatDateDDMMYYYY(new Date())}
         </div>
       </div>
     </>
