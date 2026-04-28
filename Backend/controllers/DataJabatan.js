@@ -57,13 +57,24 @@ export const createDataJabatan = async (req, res) => {
         id_jabatan, nama_jabatan, gaji_pokok, tj_transport, uang_makan
     } = req.body;
     try {
+        const gajiPokok = parseInt(gaji_pokok);
+        const tjTransport = parseInt(tj_transport);
+        const uangMakan = parseInt(uang_makan);
+
+        if (gajiPokok < 0 || tjTransport < 0 || uangMakan < 0) {
+            return res.status(400).json({ 
+                success: false, 
+                message: "Gaji pokok, tunjangan transport, dan uang makan tidak boleh negatif" 
+            });
+        }
+
         if (req.hak_akses === "admin") {
             await DataJabatan.create({
                 id_jabatan: id_jabatan,
                 nama_jabatan: nama_jabatan,
-                gaji_pokok: gaji_pokok,
-                tj_transport: tj_transport,
-                uang_makan: uang_makan,
+                gaji_pokok: gajiPokok,
+                tj_transport: tjTransport,
+                uang_makan: uangMakan,
                 userId: req.userId
             });
         } else {
@@ -94,9 +105,23 @@ export const updateDataJabatan = async (req, res) => {
         });
         if (!jabatan) return res.status(404).json({ msg: "Data tidak ditemukan" });
         const { nama_jabatan, gaji_pokok, tj_transport, uang_makan } = req.body;
+        
+        const gajiPokok = parseInt(gaji_pokok);
+        const tjTransport = parseInt(tj_transport);
+        const uangMakan = parseInt(uang_makan);
+
+        if (gajiPokok < 0 || tjTransport < 0 || uangMakan < 0) {
+            return res.status(400).json({ 
+                msg: "Gaji pokok, tunjangan transport, dan uang makan tidak boleh negatif" 
+            });
+        }
+        
         if (req.hak_akses === "admin") {
             await DataJabatan.update({
-                nama_jabatan, gaji_pokok, tj_transport, uang_makan
+                nama_jabatan, 
+                gaji_pokok: gajiPokok, 
+                tj_transport: tjTransport, 
+                uang_makan: uangMakan
             }, {
                 where: {
                     id: jabatan.id
@@ -105,7 +130,10 @@ export const updateDataJabatan = async (req, res) => {
         } else {
             if (req.userId !== DataJabatan.userId) return res.status(403).json({ msg: "Akses terlarang" });
             await DataJabatan.update({
-                nama_jabatan, gaji_pokok, tj_transport, uang_makan
+                nama_jabatan, 
+                gaji_pokok: gajiPokok, 
+                tj_transport: tjTransport, 
+                uang_makan: uangMakan
             }, {
                 where: {
                     [Op.and]: [{ id_jabatan: jabatan.id_jabatan }, { userId: req.userId }]
