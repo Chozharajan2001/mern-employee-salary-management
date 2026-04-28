@@ -6,7 +6,7 @@ import { FaRegEdit, FaPlus } from 'react-icons/fa';
 import { BsTrash3 } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
-import { deleteDataPegawai, getDataPegawai, getMe } from '../../../../config/redux/action';
+import { deleteDataPegawai, getDataJabatan, getDataPegawai, getMe } from '../../../../config/redux/action';
 import { BiSearch } from 'react-icons/bi';
 import { MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight, MdOutlineKeyboardArrowDown } from 'react-icons/md';
 
@@ -20,6 +20,7 @@ const DataPegawai = () => {
     const navigate = useNavigate();
     const { isError, user } = useSelector((state) => state.auth);
     const { dataPegawai } = useSelector((state) => state.dataPegawai);
+    const { dataJabatan } = useSelector((state) => state.dataJabatan);
 
     const totalPages = Math.ceil(dataPegawai.length / ITEMS_PER_PAGE);
 
@@ -82,9 +83,51 @@ const DataPegawai = () => {
         });
     };
 
+    const escapeCsvValue = (value) => {
+        const normalizedValue = value ?? '';
+        const stringValue = String(normalizedValue).replace(/"/g, '""');
+        return `"${stringValue}"`;
+    };
+
+    const handleDownloadCsv = () => {
+        const jabatanSalaryMap = new Map(
+            dataJabatan.map((jabatan) => [jabatan.nama_jabatan, jabatan.gaji_pokok])
+        );
+
+        const headers = ['Name', 'Designation', 'Department', 'Salary'];
+        const rows = filteredDataPegawai.map((pegawai) => {
+            const salary = jabatanSalaryMap.get(pegawai.jabatan) ?? '';
+            return [
+                pegawai.nama_pegawai,
+                pegawai.designation || '',
+                pegawai.jabatan || '',
+                salary,
+            ];
+        });
+
+        const csvContent = [headers, ...rows]
+            .map((row) => row.map(escapeCsvValue).join(','))
+            .join('\n');
+
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+
+        link.href = url;
+        link.setAttribute('download', `employee-list-${new Date().toISOString().split('T')[0]}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    };
+
     useEffect(() => {
         dispatch(getDataPegawai(startIndex, endIndex));
     }, [dispatch, startIndex, endIndex]);
+
+    useEffect(() => {
+        dispatch(getDataJabatan());
+    }, [dispatch]);
 
     useEffect(() => {
         dispatch(getMe());
@@ -147,14 +190,23 @@ const DataPegawai = () => {
     return (
         <Layout>
             <Breadcrumb pageName="Data Pegawai" />
-            <Link to="/data-pegawai/form-data-pegawai/add">
-                <ButtonOne>
-                    <span>Tambah Pegawai</span>
-                    <span>
-                        <FaPlus />
-                    </span>
-                </ButtonOne>
-            </Link>
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                <Link to="/data-pegawai/form-data-pegawai/add">
+                    <ButtonOne>
+                        <span>Tambah Pegawai</span>
+                        <span>
+                            <FaPlus />
+                        </span>
+                    </ButtonOne>
+                </Link>
+                <button
+                    type="button"
+                    onClick={handleDownloadCsv}
+                    className="inline-flex items-center gap-2 rounded bg-success py-2 px-4 font-medium text-white hover:bg-opacity-90"
+                >
+                    Download CSV
+                </button>
+            </div>
             <div className="rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1 mt-6">
                 <div className="flex justify-between items-center mt-4 flex-col md:flex-row md:justify-between">
                     <div className="relative flex-1 md:mr-2 mb-4 md:mb-0">
