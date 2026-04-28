@@ -6,6 +6,8 @@ import About from '../../pages/About';
 import Contact from '../../pages/Contact';
 import Login from '../../pages/Login';
 import Dashboard from '../../pages/Dashboard';
+import OvertimeEntry from '../../pages/Admin/Transaksi/OvertimeEntry';
+import OvertimeList from '../../pages/Admin/Transaksi/OvertimeList';
 import {
   FormAddDataJabatan,
   FormEditDataJabatan,
@@ -73,6 +75,14 @@ const AppRoutes = () => {
       />
 
       {/* Transaksi Admin */}
+      <Route
+        path='/overtime-entry'
+        element={<OvertimeEntry />}
+      />
+      <Route
+        path='/overtime-list'
+        element={<OvertimeList />}
+      />
       <Route
         path='/data-kehadiran'
         element={<DataKehadiran />}
